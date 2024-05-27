@@ -1,7 +1,7 @@
 %{
 /* scanner.l - lexical analyzer for MiniC
  * 
- * Programmer - 
+ * Programmer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
  * 
  * data - 2024-05-22
  */
@@ -9,15 +9,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tn.h"
-#include "glob.h"
+//#include "glob.h"
 
 extern ComputeHS(int nid, int nfree);
 extern LookupHS(int nid, int nfree);
 extern AddHT(int hscode);
 extern PrintHT();
 extern yyerror(char *s);
-
-int i;
 %}
 
 %s CMT
@@ -37,7 +35,7 @@ int i;
 "/"			return(TDIV);
 "%"			return(TMOD);
 
-"="		return(TASSIGN);
+"="			return(TASSIGN);
 "+="		return(TADDASSIGN);
 "-="		return(TSUBASSIGN);
 "*="		return(TMULASSIGN);
@@ -68,31 +66,12 @@ int i;
 ";"			return(TSEMICOLON);
 
 [A-Za-z_][A-Za-z0-9_]*		{
-								if (nextfree >= STsize) {
-									printf("\tError>> \tOVERFLOW!\n");
-									PrintHT();
-									exit(1);
-								}
-								nextid = nextfree;
-								nextfree += (yyleng + 1);
-								for (i = 0; i < yyleng; i++) {
-									ST[nextid + i] = yytext[i];
-								}
-
-								ComputeHS(nextid, nextfree);
-								LookupHS(nextid, hashcode);
-
-								if (!found) {
-									AddHT(hashcode);
-								}
+								if(yyleng > 12) return(TTOOLONG); 
 								else {
-									for (i = nextid; i < nextfree - 1; i++) {
-										ST[i] = '\0';
-									}
-									nextfree = nextid;
+									symbolTable();
+									return(TIDENT);
 								}
-								return(TIDEN);
-}
+							}
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
 "/*"([^*]|\*+[^*/])*\**"*"	;
 "//".*	;

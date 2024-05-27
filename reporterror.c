@@ -1,7 +1,7 @@
 /*
 * reporterror.c - error에 대한 출력
 *
-* Progammer - 
+* Progammer - 김예지(2176082), 송채원(2076216), 신정화(2271035), 윤하영(2071033)
 *
 * date - 05/22/2024
 *
@@ -10,18 +10,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tn.h"
-#include "glob.h"
-
-extern line(int);
-extern yylex();
+//#include "glob.h"
+//extern line(int);
+//extern yylex();
 
 /*
 * yyerror() - error 함수
 */
-yyerror(s)
-char* s;
+void yyerror(char* s)
 {
-
+    printf("%s\n", s);
 }
 
 void printError(ERRORtypes err)
