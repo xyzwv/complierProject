@@ -17,4 +17,5 @@ while(i<=max) {
 	if(prime==1) write(i); 
 	++i;
 }
+void func(n1, n2) {}
 }

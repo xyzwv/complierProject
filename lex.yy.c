@@ -880,7 +880,7 @@ case 42:
 YY_RULE_SETUP
 #line 73 "scanner.l"
 {
-								if(yyleng > 12) return(TTOOLONG); 
+								if(yyleng > 12) return(TTOOLONG);
 								else {
 									symbolTable();
 									return(TIDENT);
@@ -900,7 +900,7 @@ return(TNUMBER);
 case 45:
 YY_RULE_SETUP
 #line 85 "scanner.l"
-return(TILLCH);;
+return(TILLCH); //<- 이건 여기서 error 처리
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
@@ -1772,10 +1772,5 @@ int main()
 
 
 int yywrap() {
-	printf("\n");
-	printf("2071033 YOON-HAYEONG\n");
-	printf("2076216 SONG-CHAEWON\n");
-	printf("2176082 KIM-YEJI\n");
-	printf("2271035 SHIN-JUNGHWA\n");
 	return 1;
 }

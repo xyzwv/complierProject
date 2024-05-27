@@ -3,6 +3,9 @@
 #include "glob.h"
 
 extern int yyparse();
+int line_num = 1;
+int cErrors = 0;
+
 void main()
 {
 	printf("start of parser\n");

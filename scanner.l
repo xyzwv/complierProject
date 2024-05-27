@@ -71,7 +71,7 @@ extern yyerror(char *s);
 "/*"([^*]|\*+[^*/])*\**"*"	;
 
 [A-Za-z_][A-Za-z0-9_]*		{
-								if(yyleng > 12) return(TTOOLONG); 
+								if(yyleng > 12) return(TTOOLONG);
 								else {
 									symbolTable();
 									return(TIDENT);
@@ -82,14 +82,9 @@ extern yyerror(char *s);
 
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
 
-.			return(TILLCH);;
+.			return(TILLCH); //<- 이건 여기서 error 처리
 %%
 
 int yywrap() {
-	printf("\n");
-	printf("2071033 YOON-HAYEONG\n");
-	printf("2076216 SONG-CHAEWON\n");
-	printf("2176082 KIM-YEJI\n");
-	printf("2271035 SHIN-JUNGHWA\n");
 	return 1;
 }

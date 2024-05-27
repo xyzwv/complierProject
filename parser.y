@@ -18,9 +18,9 @@ int type_int = 0;
 int type_void = 0;
 
 void line(int);
-extern printError();
+extern printError(ERRORtypes err);
 extern yylex();
-extern yyerror(s);
+extern yyerror(char* s);
 %}
 
 %token TIDENT TNUMBER TCONST TELSE TIF TINT TRETURN TVOID TWHILE
@@ -41,16 +41,13 @@ translation_unit 	: external_dcl
 					;
 external_dcl 		: function_def
 		  			| declaration
-					| TIDENT TSEMICOLON
-					| TIDENT error
-					{
-						yyerrok;
-						printError(wrong_st);	/* error - wrong statement */
-					}
 					;
 function_def 		: function_header compound_st
-					| function_header TSEMICOLON
 					| function_header error			/* 비정상적인 함수 정의 */
+					{
+						yyerrok;
+						printError(wrong_funcdef);	/* error - wrong function definition */
+					}
 					;
 function_header 	: dcl_spec function_name formal_param
 					;
@@ -70,6 +67,11 @@ type_specifier 		: TINT	{type_int=1;}	/* type: integer */
 function_name 		: TIDENT
 					;
 formal_param 		: TLPAREN opt_formal_param TRPAREN
+					| TLPAREN opt_formal_param error
+					{
+						yyerrok;
+						printError(noparen);	/* error - Missing paren */
+					}
 					;
 opt_formal_param 	: formal_param_list
 					|
@@ -83,6 +85,11 @@ formal_param_list 	: param_dcl
 param_dcl 			: dcl_spec declarator
 					;
 compound_st 		: TLBRACE opt_dcl_list opt_stat_list TRBRACE
+					| TLBRACE opt_dcl_list opt_stat_list error
+					{
+						yyerrok;
+						printError(nobrace);	/* error - Missing brace */
+					}
 					;
 opt_dcl_list 		: declaration_list
 					|
@@ -91,6 +98,11 @@ declaration_list 	: declaration
 					| declaration_list declaration
 					;
 declaration 		: dcl_spec init_dcl_list TSEMICOLON
+					|
+					{
+						yyerrok;
+						printError(wrong_dcl);	/* error - wrong declaration */
+					}
 					;
 init_dcl_list 		: init_declarator
 					| init_dcl_list TCOMMA init_declarator
@@ -100,6 +112,11 @@ init_declarator 	: declarator
 					;
 declarator 			: TIDENT
 	     			| TIDENT TLSQUARE opt_number TRSQUARE
+					| TIDENT TLSQUARE opt_number error
+					{
+						yyerrok;
+						printError(nosquare);	/* error - Missing square */
+					}
 					;
 opt_number 			: TNUMBER
 	     			|
@@ -186,6 +203,18 @@ actual_param_list 	: assignment_exp
 primary_exp 		: TIDENT
 	     			| TNUMBER
 	     			| TLPAREN expression TRPAREN
+					;
+TIDENT				: TIDENT
+					| TTOOLONG
+					{
+						yyerrok;
+						printError(toolong);	/* error - too long TIDENT */
+					}
+					| TILLIDENT
+					{
+						yyerrok;
+						printError(illid);		/* error - illegal TIDENT */
+					}
 					;
 %%
 
