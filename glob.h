@@ -19,6 +19,7 @@ enum errorTypes { wrong_dcl, wrong_funcdef, nosemi, nobrace, nosquare, noparen,
 				  noerror, illsp, illid, overst, toolong };
 typedef enum errorTypes ERRORtypes;
 
-void symbolTable();
+extern void symbolTable();
+extern void printHT();
 
 #endif /* GLOB_H */

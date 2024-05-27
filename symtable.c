@@ -112,6 +112,33 @@ void AddHT(int hscode) {
     HT[hscode] = ptr;
 }
 
+// Print Hashtable - Print the hash table. Write out the hashcode and the list of identifiers
+//                 associated with each hashcode, but only for non-empty list.
+//                 Print out the number of characters used up in ST.
+void printHT() {
+    int i, j;
+    HTpointer here;
+
+    printf("\n\n\n [[ HASH TABLE ]] \n\n");
+
+    for (i = 0; i < HTsize; i++) {
+        if (HT[i] != NULL) {
+            printf("  Hash Code %3d : ", i);
+            // 연결리스트에서 다음 칸으로 넘어가면서 출력
+            for (here = HT[i]; here != NULL; here = here->next) {
+                j = here->index;
+                while (ST[j] != '\0' && j < STsize) {
+                    printf("%c", ST[j++]);
+                }
+                printf("    ");
+            }
+            printf("\n");
+        }
+    }
+
+    printf("\n < %d characters are used in the string table >\n\n\n\n", nextfree);
+}
+
 // symbolTable - Read the identifier from the file and directly append it into ST.
 //               Compute its hash code and look up the identifier in hash table HT[hashcode].
 //               Update stidx(index in String Table).
