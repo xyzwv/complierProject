@@ -1,4 +1,8 @@
 const int max=100;
+void func(int n1, int n2) {
+	int x = 0;
+	x = x + 1;
+}
 void main()
 {
 int i,j,k;
@@ -17,5 +21,5 @@ while(i<=max) {
 	if(prime==1) write(i); 
 	++i;
 }
-void func(n1, n2) {}
+func(i, j);
 }

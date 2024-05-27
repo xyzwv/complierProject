@@ -20,7 +20,6 @@ extern int cErrors; // number of errors
 */
 void yyerror(char* s)
 {
-    printf("%s\n", s);
 }
 
 void printError(ERRORtypes err)

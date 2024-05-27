@@ -43,11 +43,6 @@ external_dcl 		: function_def
 		  			| declaration
 					;
 function_def 		: function_header compound_st
-					| function_header error			/* 비정상적인 함수 정의 */
-					{
-						yyerrok;
-						printError(wrong_funcdef);	/* error - wrong function definition */
-					}
 					;
 function_header 	: dcl_spec function_name formal_param
 					;
@@ -98,7 +93,12 @@ declaration_list 	: declaration
 					| declaration_list declaration
 					;
 declaration 		: dcl_spec init_dcl_list TSEMICOLON
-					|
+					| dcl_spec init_dcl_list error
+					{
+						yyerrok;
+						printError(nosemi);	/* error - Missing semicolon */
+					}
+					| dcl_spec error
 					{
 						yyerrok;
 						printError(wrong_dcl);	/* error - wrong declaration */
@@ -144,6 +144,11 @@ if_st 				: TIF TLPAREN expression TRPAREN statement %prec TLOWERTHANELSE
 while_st 			: TWHILE TLPAREN expression TRPAREN statement
 					;
 return_st 			: TRETURN opt_expression TSEMICOLON
+					| TRETURN opt_expression error
+					{
+						yyerrok;
+						printError(nosemi);	/* error - Missing semicolon */
+					}
 					;
 expression 			: assignment_exp
 					;
