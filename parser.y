@@ -2,7 +2,7 @@
 /*
  * parser.y - yacc source for the MiniC
  * 
- * Programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
+ * Programmer - ê¹€ì˜ˆì§€(2176082), ì†¡ì±„ì›(2076216), ì‹ ì •í™”(2271035), ìœ¤í•˜ì˜(2071033)
  *
  * date - 2024/5/31
  *
@@ -43,18 +43,18 @@ external_dcl 		: function_def
 					| TIDEN TSEMICOLON
 					| TIDEN error
 					{
-						yyerror;
+						yyerrok;
 						printError(wrong_st);	/* error - wrong statement */
 					}
 					;
 function_def 		: function_header compound_st		
 					| function_header TSEMICOLON
-					| function_header error			/* ºñÁ¤»óÀûÀÎ ÇÔ¼ö Á¤ÀÇ */
+					| function_header error			/* ë¹„ì •ìƒì ì¸ í•¨ìˆ˜ ì •ì˜ */
 					{
-						/* ¿¡·¯ ¹ß»ı ½Ã type ¼öÁ¤À» À§ÇØ default°ª 0 ¼¼ÆÃ */
+						/* ì—ëŸ¬ ë°œìƒ ì‹œ type ìˆ˜ì •ì„ ìœ„í•´ defaultê°’ 0 ì„¸íŒ… */
 						/* identifier about parse error */
 						look_tmp->type = 0;
-						yyerror;
+						yyerrok;
 						/* error - wrong function definition */
 						printError(wrong_funcdef);
 					}
@@ -95,7 +95,7 @@ formal_param_list 	: param_dcl
 		    		| formal_param_list TCOMMA param_dcl
 					;
 
-/* ¾Æ·¡´Â Âü°íÀÚ·á¿¡ ¾ø´Â ºÎºĞÀ¸·Î, parser_book.y¿¡ ÀÖ´Â ÄÚµå semantic¸¸ Áö¿ì°í ±×´ë·Î °¡Á®¿È */
+/* ì•„ë˜ëŠ” ì°¸ê³ ìë£Œì— ì—†ëŠ” ë¶€ë¶„ìœ¼ë¡œ, parser_book.yì— ìˆëŠ” ì½”ë“œ semanticë§Œ ì§€ìš°ê³  ê·¸ëŒ€ë¡œ ê°€ì ¸ì˜´ */
 
 param_dcl 			: dcl_spec declarator
 compound_st 		: '{' opt_dcl_list opt_stat_list '}'
