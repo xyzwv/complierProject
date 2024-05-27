@@ -64,7 +64,7 @@ type_qualifier 		: TCONST
 type_specifier 		: TINT	{type_int=1;}	/* type: integer */
 		 			| TVOID	{type_void=1;}	/* type: void */
 					;
-function_name 		: TIDENT
+function_name 		: identifier
 					;
 formal_param 		: TLPAREN opt_formal_param TRPAREN
 					| TLPAREN opt_formal_param error
@@ -110,9 +110,9 @@ init_dcl_list 		: init_declarator
 init_declarator 	: declarator
 		 			| declarator TASSIGN TNUMBER
 					;
-declarator 			: TIDENT
-	     			| TIDENT TLSQUARE opt_number TRSQUARE
-					| TIDENT TLSQUARE opt_number error
+declarator 			: identifier
+	     			| identifier TLSQUARE opt_number TRSQUARE
+					| identifier TLSQUARE opt_number error
 					{
 						yyerrok;
 						printError(nosquare);	/* error - Missing square */
@@ -200,20 +200,20 @@ actual_param 		: actual_param_list
 actual_param_list 	: assignment_exp
 					| actual_param_list TCOMMA assignment_exp
 					;
-primary_exp 		: TIDENT
+primary_exp 		: identifier
 	     			| TNUMBER
 	     			| TLPAREN expression TRPAREN
 					;
-TIDENT				: TIDENT
+identifier			: TIDENT
 					| TTOOLONG
 					{
 						yyerrok;
-						printError(toolong);	/* error - too long TIDENT */
+						printError(toolong);	/* error - too long identifier */
 					}
 					| TILLIDENT
 					{
 						yyerrok;
-						printError(illid);		/* error - illegal TIDENT */
+						printError(illid);		/* error - illegal identifier */
 					}
 					;
 %%
