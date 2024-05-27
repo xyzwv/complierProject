@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tn.h"
-//#include "glob.h"
+#include "glob.h"
 //extern line(int);
 //extern yylex();
 

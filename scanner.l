@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tn.h"
-//#include "glob.h"
+#include "glob.h"
 
 extern ComputeHS(int nid, int nfree);
 extern LookupHS(int nid, int nfree);
@@ -65,6 +65,11 @@ extern yyerror(char *s);
 ","			return(TCOMMA);
 ";"			return(TSEMICOLON);
 
+\n      	line_num++;
+[ \t]		;
+"//".*		;
+"/*"([^*]|\*+[^*/])*\**"*"	;
+
 [A-Za-z_][A-Za-z0-9_]*		{
 								if(yyleng > 12) return(TTOOLONG); 
 								else {
@@ -72,13 +77,19 @@ extern yyerror(char *s);
 									return(TIDENT);
 								}
 							}
+
+[0-9][A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
+
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
-"/*"([^*]|\*+[^*/])*\**"*"	;
-"//".*	;
-[ \t\n] ;
-.	return(yytext[0]);
+
+.			return(TILLCH);;
 %%
 
 int yywrap() {
+	printf("\n");
+	printf("2071033 YOON-HAYEONG\n");
+	printf("2076216 SONG-CHAEWON\n");
+	printf("2176082 KIM-YEJI\n");
+	printf("2271035 SHIN-JUNGHWA\n");
 	return 1;
 }

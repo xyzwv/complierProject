@@ -29,6 +29,7 @@ extern yyerror(s);
 %token TNOT TOR TAND TEQUAL TNOTEQU TGREAT TLESS TGREATE TLESSE
 %token TINC TDEC TCOMMA TSEMICOLON
 %token TLPAREN TRPAREN TLBRACE TRBRACE TLSQUARE TRSQUARE
+%token TTOOLONG TILLIDENT TILLCH
 %nonassoc TLOWERTHANELSE
 %nonassoc TELSE
 
@@ -50,14 +51,6 @@ external_dcl 		: function_def
 function_def 		: function_header compound_st
 					| function_header TSEMICOLON
 					| function_header error			/* 비정상적인 함수 정의 */
-					{
-						/* 에러 발생 시 type 수정을 위해 default값 0 세팅 */
-						/* identifier about parse error */
-						look_tmp->type = 0;
-						yyerrok;
-						/* error - wrong function definition */
-						printError(wrong_funcdef);
-					}
 					;
 function_header 	: dcl_spec function_name formal_param
 					;
@@ -75,16 +68,6 @@ type_specifier 		: TINT	{type_int=1;}	/* type: integer */
 		 			| TVOID	{type_void=1;}	/* type: void */
 					;
 function_name 		: TIDENT
-					{
-						/* identifier about parse error or not defined identifier/function */
-						if(look_id->type == 0 || look_id->type == 5)
-						{
-							look_id->type=4;		/* function name */
-							type_int=0;				/* not integer */
-							type_void=0;			/* not void */
-							look_tmp=look_id;
-						}
-					}
 					;
 formal_param 		: TLPAREN opt_formal_param TRPAREN
 					;

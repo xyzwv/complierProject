@@ -40,7 +40,10 @@
 #define	TRBRACE	294
 #define	TLSQUARE	295
 #define	TRSQUARE	296
-#define	TLOWERTHANELSE	297
+#define	TTOOLONG	297
+#define	TILLIDENT	298
+#define	TILLCH	299
+#define	TLOWERTHANELSE	300
 
 
 extern YYSTYPE yylval;

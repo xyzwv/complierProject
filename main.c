@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include tn.h
-#include "global.h"
+#include "tn.h"
+#include "glob.h"
 
 extern int yyparse();
 void main()

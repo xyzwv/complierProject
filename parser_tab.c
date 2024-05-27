@@ -43,7 +43,10 @@
 #define	TRBRACE	294
 #define	TLSQUARE	295
 #define	TRSQUARE	296
-#define	TLOWERTHANELSE	297
+#define	TTOOLONG	297
+#define	TILLIDENT	298
+#define	TILLCH	299
+#define	TLOWERTHANELSE	300
 
 #line 1 "parser.y"
 
@@ -69,6 +72,8 @@ void line(int);
 extern printError();
 extern yylex();
 extern yyerror(s);
+extern enum errorTypes;
+extern typedef enum errorTypes ERRORtypes;
 
 #ifndef YYLTYPE
 typedef
@@ -101,9 +106,9 @@ typedef
 
 #define	YYFINAL		158
 #define	YYFLAG		-32768
-#define	YYNTBASE	43
+#define	YYNTBASE	46
 
-#define YYTRANSLATE(x) ((unsigned)(x) <= 297 ? yytranslate[x] : 88)
+#define YYTRANSLATE(x) ((unsigned)(x) <= 300 ? yytranslate[x] : 91)
 
 static const char yytranslate[] = {     0,
      2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
@@ -135,7 +140,7 @@ static const char yytranslate[] = {     0,
      6,     7,     8,     9,    10,    11,    12,    13,    14,    15,
     16,    17,    18,    19,    20,    21,    22,    23,    24,    25,
     26,    27,    28,    29,    30,    31,    32,    33,    34,    35,
-    36,    37,    38,    39,    40,    41,    42
+    36,    37,    38,    39,    40,    41,    42,    43,    44,    45
 };
 
 #if YYDEBUG != 0
@@ -153,54 +158,54 @@ static const short yyprhs[] = {     0,
    291
 };
 
-static const short yyrhs[] = {    44,
-     0,    45,     0,    44,    45,     0,    46,     0,    61,     0,
-     3,    35,     0,     3,     1,     0,    47,    58,     0,    47,
-    35,     0,    47,     1,     0,    48,    53,    54,     0,    49,
-     0,    50,     0,    49,    50,     0,    51,     0,    52,     0,
-     5,     0,     8,     0,    10,     0,     3,     0,    36,    55,
-    37,     0,    56,     0,     0,    57,     0,    56,    34,    57,
-     0,    48,    64,     0,    38,    59,    66,    39,     0,    60,
-     0,     0,    61,     0,    60,    61,     0,    48,    62,    35,
-     0,    63,     0,    62,    34,    63,     0,    64,     0,    64,
-    17,     4,     0,     3,     0,     3,    40,    65,    41,     0,
-     4,     0,     0,    67,     0,     0,    68,     0,    67,    68,
-     0,    58,     0,    69,     0,    71,     0,    72,     0,    73,
-     0,    70,    35,     0,    74,     0,     0,     7,    36,    74,
-    37,    68,     0,     7,    36,    74,    37,    68,     6,    68,
-     0,    11,    36,    74,    37,    68,     0,     9,    70,    35,
-     0,    75,     0,    76,     0,    82,    17,    75,     0,    82,
-    18,    75,     0,    82,    19,    75,     0,    82,    20,    75,
-     0,    82,    21,    75,     0,    82,    22,    75,     0,    77,
-     0,    76,    24,    77,     0,    78,     0,    77,    25,    78,
-     0,    79,     0,    78,    26,    79,     0,    78,    27,    79,
-     0,    80,     0,    79,    28,    80,     0,    79,    29,    80,
-     0,    79,    30,    80,     0,    79,    31,    80,     0,    81,
-     0,    80,    12,    81,     0,    80,    13,    81,     0,    82,
-     0,    81,    14,    82,     0,    81,    15,    82,     0,    81,
-    16,    82,     0,    83,     0,    13,    82,     0,    23,    82,
-     0,    32,    82,     0,    33,    82,     0,    87,     0,    83,
-    40,    74,    41,     0,    83,    36,    84,    37,     0,    83,
-    32,     0,    83,    33,     0,    85,     0,     0,    86,     0,
-    75,     0,    86,    34,    75,     0,     3,     0,     4,     0,
-    36,    74,    37,     0
+static const short yyrhs[] = {    47,
+     0,    48,     0,    47,    48,     0,    49,     0,    64,     0,
+     3,    35,     0,     3,     1,     0,    50,    61,     0,    50,
+    35,     0,    50,     1,     0,    51,    56,    57,     0,    52,
+     0,    53,     0,    52,    53,     0,    54,     0,    55,     0,
+     5,     0,     8,     0,    10,     0,     3,     0,    36,    58,
+    37,     0,    59,     0,     0,    60,     0,    59,    34,    60,
+     0,    51,    67,     0,    38,    62,    69,    39,     0,    63,
+     0,     0,    64,     0,    63,    64,     0,    51,    65,    35,
+     0,    66,     0,    65,    34,    66,     0,    67,     0,    67,
+    17,     4,     0,     3,     0,     3,    40,    68,    41,     0,
+     4,     0,     0,    70,     0,     0,    71,     0,    70,    71,
+     0,    61,     0,    72,     0,    74,     0,    75,     0,    76,
+     0,    73,    35,     0,    77,     0,     0,     7,    36,    77,
+    37,    71,     0,     7,    36,    77,    37,    71,     6,    71,
+     0,    11,    36,    77,    37,    71,     0,     9,    73,    35,
+     0,    78,     0,    79,     0,    85,    17,    78,     0,    85,
+    18,    78,     0,    85,    19,    78,     0,    85,    20,    78,
+     0,    85,    21,    78,     0,    85,    22,    78,     0,    80,
+     0,    79,    24,    80,     0,    81,     0,    80,    25,    81,
+     0,    82,     0,    81,    26,    82,     0,    81,    27,    82,
+     0,    83,     0,    82,    28,    83,     0,    82,    29,    83,
+     0,    82,    30,    83,     0,    82,    31,    83,     0,    84,
+     0,    83,    12,    84,     0,    83,    13,    84,     0,    85,
+     0,    84,    14,    85,     0,    84,    15,    85,     0,    84,
+    16,    85,     0,    86,     0,    13,    85,     0,    23,    85,
+     0,    32,    85,     0,    33,    85,     0,    90,     0,    86,
+    40,    77,    41,     0,    86,    36,    87,    37,     0,    86,
+    32,     0,    86,    33,     0,    88,     0,     0,    89,     0,
+    78,     0,    89,    34,    78,     0,     3,     0,     4,     0,
+    36,    77,    37,     0
 };
 
 #endif
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    36,    38,    39,    41,    42,    43,    44,    50,    51,    52,
-    62,    64,    66,    67,    69,    70,    72,    74,    75,    77,
-    89,    91,    92,    94,    95,   100,   102,   104,   105,   107,
-   108,   110,   112,   113,   115,   116,   118,   119,   121,   122,
-   124,   125,   127,   128,   130,   131,   132,   133,   134,   136,
-   138,   139,   141,   142,   144,   146,   148,   150,   151,   152,
-   153,   154,   155,   156,   158,   159,   161,   162,   164,   165,
-   166,   168,   169,   170,   171,   172,   174,   175,   176,   178,
-   179,   180,   181,   183,   184,   185,   186,   187,   189,   190,
-   191,   192,   193,   195,   196,   198,   200,   201,   203,   204,
-   205
+    39,    41,    42,    44,    45,    46,    47,    53,    54,    55,
+    57,    59,    61,    62,    64,    65,    67,    69,    70,    72,
+    74,    76,    77,    79,    80,    85,    87,    89,    90,    92,
+    93,    95,    97,    98,   100,   101,   103,   104,   106,   107,
+   109,   110,   112,   113,   115,   116,   117,   118,   119,   121,
+   123,   124,   126,   127,   129,   131,   133,   135,   136,   137,
+   138,   139,   140,   141,   143,   144,   146,   147,   149,   150,
+   151,   153,   154,   155,   156,   157,   159,   160,   161,   163,
+   164,   165,   166,   168,   169,   170,   171,   172,   174,   175,
+   176,   177,   178,   180,   181,   183,   185,   186,   188,   189,
+   190
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
@@ -208,31 +213,31 @@ static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
 "TMUL","TDIV","TMOD","TASSIGN","TADDASSIGN","TSUBASSIGN","TMULASSIGN","TDIVASSIGN",
 "TMODASSIGN","TNOT","TOR","TAND","TEQUAL","TNOTEQU","TGREAT","TLESS","TGREATE",
 "TLESSE","TINC","TDEC","TCOMMA","TSEMICOLON","TLPAREN","TRPAREN","TLBRACE","TRBRACE",
-"TLSQUARE","TRSQUARE","TLOWERTHANELSE","mini_c","translation_unit","external_dcl",
-"function_def","function_header","dcl_spec","dcl_specifiers","dcl_specifier",
-"type_qualifier","type_specifier","function_name","formal_param","opt_formal_param",
-"formal_param_list","param_dcl","compound_st","opt_dcl_list","declaration_list",
-"declaration","init_dcl_list","init_declarator","declarator","opt_number","opt_stat_list",
-"statement_list","statement","expression_st","opt_expression","if_st","while_st",
-"return_st","expression","assignment_exp","logical_or_exp","logical_and_exp",
-"equality_exp","relational_exp","additive_exp","multiplicative_exp","unary_exp",
-"postfix_exp","opt_actual_param","actual_param","actual_param_list","primary_exp",
-""
+"TLSQUARE","TRSQUARE","TTOOLONG","TILLIDENT","TILLCH","TLOWERTHANELSE","mini_c",
+"translation_unit","external_dcl","function_def","function_header","dcl_spec",
+"dcl_specifiers","dcl_specifier","type_qualifier","type_specifier","function_name",
+"formal_param","opt_formal_param","formal_param_list","param_dcl","compound_st",
+"opt_dcl_list","declaration_list","declaration","init_dcl_list","init_declarator",
+"declarator","opt_number","opt_stat_list","statement_list","statement","expression_st",
+"opt_expression","if_st","while_st","return_st","expression","assignment_exp",
+"logical_or_exp","logical_and_exp","equality_exp","relational_exp","additive_exp",
+"multiplicative_exp","unary_exp","postfix_exp","opt_actual_param","actual_param",
+"actual_param_list","primary_exp",""
 };
 #endif
 
 static const short yyr1[] = {     0,
-    43,    44,    44,    45,    45,    45,    45,    46,    46,    46,
-    47,    48,    49,    49,    50,    50,    51,    52,    52,    53,
-    54,    55,    55,    56,    56,    57,    58,    59,    59,    60,
-    60,    61,    62,    62,    63,    63,    64,    64,    65,    65,
-    66,    66,    67,    67,    68,    68,    68,    68,    68,    69,
-    70,    70,    71,    71,    72,    73,    74,    75,    75,    75,
-    75,    75,    75,    75,    76,    76,    77,    77,    78,    78,
-    78,    79,    79,    79,    79,    79,    80,    80,    80,    81,
-    81,    81,    81,    82,    82,    82,    82,    82,    83,    83,
-    83,    83,    83,    84,    84,    85,    86,    86,    87,    87,
-    87
+    46,    47,    47,    48,    48,    48,    48,    49,    49,    49,
+    50,    51,    52,    52,    53,    53,    54,    55,    55,    56,
+    57,    58,    58,    59,    59,    60,    61,    62,    62,    63,
+    63,    64,    65,    65,    66,    66,    67,    67,    68,    68,
+    69,    69,    70,    70,    71,    71,    71,    71,    71,    72,
+    73,    73,    74,    74,    75,    76,    77,    78,    78,    78,
+    78,    78,    78,    78,    79,    79,    80,    80,    81,    81,
+    81,    82,    82,    82,    82,    82,    83,    83,    83,    84,
+    84,    84,    84,    85,    85,    85,    85,    85,    86,    86,
+    86,    86,    86,    87,    87,    88,    89,    89,    90,    90,
+    90
 };
 
 static const short yyr2[] = {     0,
@@ -835,43 +840,19 @@ yyreduce:
   switch (yyn) {
 
 case 7:
-#line 45 "parser.y"
+#line 48 "parser.y"
 {
 						yyerrok;
 						printError(wrong_st);	/* error - wrong statement */
 					;
     break;}
-case 10:
-#line 53 "parser.y"
-{
-						/* 에러 발생 시 type 수정을 위해 default값 0 세팅 */
-						/* identifier about parse error */
-						look_tmp->type = 0;
-						yyerrok;
-						/* error - wrong function definition */
-						printError(wrong_funcdef);
-					;
-    break;}
 case 18:
-#line 74 "parser.y"
+#line 69 "parser.y"
 {type_int=1;;
     break;}
 case 19:
-#line 75 "parser.y"
+#line 70 "parser.y"
 {type_void=1;;
-    break;}
-case 20:
-#line 78 "parser.y"
-{
-						/* identifier about parse error or not defined identifier/function */
-						if(look_id->type == 0 || look_id->type == 5)
-						{
-							look_id->type=4;		/* function name */
-							type_int=0;				/* not integer */
-							type_void=0;			/* not void */
-							look_tmp=look_id;
-						}
-					;
     break;}
 }
    /* the action file gets copied in in place of this dollarsign */
@@ -1071,6 +1052,6 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 207 "parser.y"
+#line 192 "parser.y"
 
 
