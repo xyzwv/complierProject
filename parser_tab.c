@@ -65,14 +65,10 @@
 #include <malloc.h>
 #include "glob.h"
 
-int type_int = 0;
-int type_void = 0;
+int returntp = 0; // 0:void, 1:int
+int type = 0; // 0:scalar, 1:array, 2:function
+int paramidx = 0; // index of parameter array
 
-int returntp = 0; // 0:void 1:int
-int type = 0; // 0:scalar 1:array 2:function
-int paramidx = 0;
-
-void line(int);
 extern printError(ERRORtypes err);
 extern yylex();
 extern yyerror(char* s);
@@ -199,17 +195,17 @@ static const short yyrhs[] = {    47,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    41,    43,    44,    46,    47,    49,    52,    54,    56,    57,
-    59,    60,    62,    64,    65,    67,    75,    76,    82,    83,
-    85,    86,    91,    98,    99,   105,   106,   108,   109,   111,
-   112,   117,   123,   124,   126,   127,   129,   130,   131,   137,
-   138,   140,   141,   143,   144,   146,   147,   148,   149,   150,
-   152,   154,   155,   157,   158,   160,   162,   163,   169,   171,
-   172,   173,   174,   175,   176,   177,   179,   180,   182,   183,
-   185,   186,   187,   189,   190,   191,   192,   193,   195,   196,
-   197,   199,   200,   201,   202,   204,   205,   206,   207,   208,
-   210,   211,   212,   213,   214,   216,   217,   219,   221,   222,
-   224,   225,   226,   228,   229,   234
+    37,    39,    40,    42,    43,    45,    48,    50,    52,    53,
+    55,    56,    58,    60,    61,    63,    71,    72,    78,    79,
+    81,    82,    87,    94,    95,   101,   102,   104,   105,   107,
+   108,   113,   119,   120,   122,   123,   125,   126,   127,   133,
+   134,   136,   137,   139,   140,   142,   143,   144,   145,   146,
+   148,   150,   151,   153,   154,   156,   158,   159,   165,   167,
+   168,   169,   170,   171,   172,   173,   175,   176,   178,   179,
+   181,   182,   183,   185,   186,   187,   188,   189,   191,   192,
+   193,   195,   196,   197,   198,   200,   201,   202,   203,   204,
+   206,   207,   208,   209,   210,   212,   213,   215,   217,   218,
+   220,   221,   222,   224,   225,   230
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
@@ -850,15 +846,15 @@ yyreduce:
   switch (yyn) {
 
 case 14:
-#line 64 "parser.y"
-{type_int=1; returntp = 1;;
+#line 60 "parser.y"
+{returntp = 1;;
     break;}
 case 15:
-#line 65 "parser.y"
-{type_void=1; returntp = 0;;
+#line 61 "parser.y"
+{returntp = 0;;
     break;}
 case 16:
-#line 68 "parser.y"
+#line 64 "parser.y"
 {
 						curid->tp = 2;
 						curid->rtp = returntp;
@@ -867,14 +863,14 @@ case 16:
 					;
     break;}
 case 18:
-#line 77 "parser.y"
+#line 73 "parser.y"
 {
 						yyerrok;
 						printError(noparen);	/* error - Missing paren */
 					;
     break;}
 case 23:
-#line 92 "parser.y"
+#line 88 "parser.y"
 {
 						curid->tp = type;
 						preid->param[paramidx++] = curid->index;
@@ -882,57 +878,57 @@ case 23:
 					;
     break;}
 case 25:
-#line 100 "parser.y"
+#line 96 "parser.y"
 {
 						yyerrok;
 						printError(nobrace);	/* error - Missing brace */
 					;
     break;}
 case 31:
-#line 113 "parser.y"
+#line 109 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 32:
-#line 118 "parser.y"
+#line 114 "parser.y"
 {
 						yyerrok;
 						printError(wrong_dcl);	/* error - wrong declaration */
 					;
     break;}
 case 37:
-#line 129 "parser.y"
-{type = 0;;
+#line 125 "parser.y"
+{curid->tp = 0;;
     break;}
 case 38:
-#line 130 "parser.y"
-{type = 1;;
+#line 126 "parser.y"
+{curid->tp = 1;;
     break;}
 case 39:
-#line 132 "parser.y"
+#line 128 "parser.y"
 {
 						yyerrok;
 						printError(nosquare);	/* error - Missing square */
 					;
     break;}
 case 58:
-#line 164 "parser.y"
+#line 160 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 105:
-#line 230 "parser.y"
+#line 226 "parser.y"
 {
 						yyerrok;
 						printError(toolong);	/* error - too long identifier */
 					;
     break;}
 case 106:
-#line 235 "parser.y"
+#line 231 "parser.y"
 {
 						yyerrok;
 						printError(illid);		/* error - illegal identifier */
@@ -1136,6 +1132,6 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 240 "parser.y"
+#line 236 "parser.y"
 
 

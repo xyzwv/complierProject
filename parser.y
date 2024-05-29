@@ -14,14 +14,10 @@
 #include <malloc.h>
 #include "glob.h"
 
-int type_int = 0;
-int type_void = 0;
+int returntp = 0; // 0:void, 1:int
+int type = 0; // 0:scalar, 1:array, 2:function
+int paramidx = 0; // index of parameter array
 
-int returntp = 0; // 0:void 1:int
-int type = 0; // 0:scalar 1:array 2:function
-int paramidx = 0;
-
-void line(int);
 extern printError(ERRORtypes err);
 extern yylex();
 extern yyerror(char* s);
@@ -61,8 +57,8 @@ dcl_specifier 		: type_qualifier
 					;
 type_qualifier 		: TCONST
 					;
-type_specifier 		: TINT	{type_int=1; returntp = 1;}	/* type: integer */
-		 			| TVOID	{type_void=1; returntp = 0;}	/* type: void */
+type_specifier 		: TINT	{returntp = 1;}		/* type: integer */
+		 			| TVOID	{returntp = 0;}		/* type: void */
 					;
 function_name 		: identifier
 					{
@@ -126,8 +122,8 @@ init_dcl_list 		: init_declarator
 init_declarator 	: declarator
 		 			| declarator TASSIGN TNUMBER
 					;
-declarator 			: identifier {type = 0;}
-	     			| identifier TLSQUARE opt_number TRSQUARE {type = 1;}
+declarator 			: identifier {curid->tp = 0;}
+	     			| identifier TLSQUARE opt_number TRSQUARE {curid->tp = 1;}
 					| identifier TLSQUARE opt_number error
 					{
 						yyerrok;
