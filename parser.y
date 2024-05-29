@@ -66,7 +66,6 @@ type_specifier 		: TINT	{type_int=1; returntp = 1;}	/* type: integer */
 					;
 function_name 		: identifier
 					{
-						printf("func...");
 						curid->tp = 2;
 						curid->rtp = returntp;
 						preid = curid;

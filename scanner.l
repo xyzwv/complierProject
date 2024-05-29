@@ -74,7 +74,6 @@ extern yyerror(char *s);
 								if(yyleng > 12) return(TTOOLONG);
 								else {
 									symbolTable();
-									printf("IDENT\n");
 									return(TIDENT);
 								}
 							}
