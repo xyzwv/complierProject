@@ -2,7 +2,7 @@
 /*
  * parser.y - yacc source for the MiniC
  * 
- * Programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
+ * Programmer - ê¹€ì˜ˆì§€(2176082), ì†¡ì±„ì›(2076216), ì‹ ì •í™”(2271035), ìœ¤í•˜ì˜(2071033)
  *
  * date - 2024/5/31
  *
@@ -47,6 +47,7 @@ external_dcl 		: function_def
 		  			| declaration
 					;
 function_def 		: function_header compound_st
+
 					;
 function_header 	: dcl_spec function_name formal_param
 					;
@@ -86,7 +87,7 @@ formal_param_list 	: param_dcl
 		    		| formal_param_list TCOMMA param_dcl
 					;
 
-/* ¾Æ·¡´Â Âü°íÀÚ·á¿¡ ¾ø´Â ºÎºĞÀ¸·Î, parser_book.y¿¡ ÀÖ´Â ÄÚµå semantic¸¸ Áö¿ì°í ±×´ë·Î °¡Á®¿È */
+/* ì•„ë˜ëŠ” ì°¸ê³ ìë£Œì— ì—†ëŠ” ë¶€ë¶„ìœ¼ë¡œ, parser_book.yì— ìˆëŠ” ì½”ë“œ semanticë§Œ ì§€ìš°ê³  ê·¸ëŒ€ë¡œ ê°€ì ¸ì˜´ */
 
 param_dcl 			: dcl_spec declarator
 					{
