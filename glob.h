@@ -15,7 +15,6 @@ int stidx; // index of identifier in String Table
 int type_int; // 1: type of identifier is integer
 int type_void; // 1: type of identifier is void
 
-unsigned long yyleng; // matched string
 char* yytext; // length of matched string
 
 /*enum identtypes {

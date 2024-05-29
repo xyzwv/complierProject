@@ -39,6 +39,7 @@ int found; // for the previous ocurrence of a idntifier
 
 int stidx = 0; // index of identifier in String Table
 
+extern yyleng;
 
 // Get Type of Identifier - return the detailed type of identifier
 /*
@@ -131,7 +132,7 @@ void PrintHStable() {
                 while (ST[j] != '\0' && j < STsize) {
                     printf("%c", ST[j++]);
                 }
-                printf(": %s, line%d\n", GetTypeOfIdentifier(here->type), here->linenum);
+                printf(": %s, line%d)\n", GetTypeOfIdentifier(here->type), here->linenum);
                 printf("                "); // if it has the same hash code then make blank
             }
             for (int k = 0; k < 16; k++) { // if it has the different has code then remove blank
@@ -208,7 +209,7 @@ void LookupHS(int nid, int hscode) {
 void AddHT(int hscode, enum identtypes it) {
     HTpointer ptr;
 
-    ptr = (HTpointer)malloc(sizeof(ptr));
+    ptr = (HTpointer)malloc(sizeof(*ptr));
     ptr->index = nextid;
     ptr->linenum = line_num;
     ptr->type = it;

@@ -17,7 +17,7 @@ extern enum errortypes err;
 * yyerror() - error 함수
 */
 yyerror(char* s) {
-    printf("%s\n", s);
+    //printf("%s\n", s);
 }
 
 void line() {
