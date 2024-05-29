@@ -41,14 +41,29 @@ translation_unit 	: external_dcl
 					| TILLCH
 					{
 						yyerrok;
-						printError(illch);	/* error - Missing paren */
+						printError(illch);	/* error - Lillegal character */
 					}
 					;
 external_dcl 		: function_def
 		  			| declaration
+					| TIDENT error
+					{
+						yyerrok;
+						printError(wrong_st);	/* error - Wrong Statement */
+					}
+					| TRBRACE
+					{
+						yyerrok;
+						printError(nobrace);	/* error - Missing brace */
+					}
 					;
 function_def 		: function_header compound_st
-
+					| function_header TSEMICOLON
+					| function_header error
+					{
+						yyerrok;
+						printError(wrong_funcdef);	/* error - Wrong function definition */
+					}
 					;
 function_header 	: dcl_spec function_name formal_param
 					;
@@ -86,9 +101,6 @@ opt_formal_param 	: formal_param_list
 formal_param_list 	: param_dcl
 		    		| formal_param_list TCOMMA param_dcl
 					;
-
-/* 아래는 참고자료에 없는 부분으로, parser_book.y에 있는 코드 semantic만 지우고 그대로 가져옴 */
-
 param_dcl 			: dcl_spec declarator
 					{
 						curid->tp = type;
@@ -151,6 +163,11 @@ statement 			: compound_st
 	   				| return_st
 	   				;
 expression_st 		: opt_expression TSEMICOLON
+					| expression error
+					{
+						yyerrok;
+						printError(nosemi);	/* error - Missing semicolon */
+					}
 					;
 opt_expression		: expression
 		 			|
@@ -171,21 +188,71 @@ expression 			: assignment_exp
 					;
 assignment_exp 		: logical_or_exp
 					| unary_exp TASSIGN assignment_exp
+					| unary_exp TASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					| unary_exp TADDASSIGN assignment_exp
+					| unary_exp TADDASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					| unary_exp TSUBASSIGN assignment_exp
+					| unary_exp TSUBASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					| unary_exp TMULASSIGN assignment_exp
+					| unary_exp TMULASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					| unary_exp TDIVASSIGN assignment_exp
+					| unary_exp TDIVASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					| unary_exp TMODASSIGN assignment_exp
+					| unary_exp TMODASSIGN error
+					{
+						yyerrok;
+						printError(wrong_asgn);	/* error - Wrong assignment */
+					}
 					;
 logical_or_exp 		: logical_and_exp
 					| logical_or_exp TOR logical_and_exp
+					| logical_or_exp TOR error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					;
 logical_and_exp 	: equality_exp
 		 			| logical_and_exp TAND equality_exp
+					| logical_and_exp TAND error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					;
 equality_exp 		: relational_exp
 					| equality_exp TEQUAL relational_exp
+					| equality_exp TEQUAL error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					| equality_exp TNOTEQU relational_exp
+					| equality_exp TNOTEQU error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					;
 relational_exp	 	: additive_exp
 					| relational_exp TGREAT additive_exp
@@ -195,12 +262,37 @@ relational_exp	 	: additive_exp
 					;
 additive_exp 		: multiplicative_exp
 					| additive_exp TADD multiplicative_exp
+					| additive_exp TADD error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					| additive_exp TSUB multiplicative_exp
+					| additive_exp TSUB error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					;
 multiplicative_exp 	: unary_exp
 		    		| multiplicative_exp TMUL unary_exp
+					| multiplicative_exp TMUL error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					| multiplicative_exp TDIV unary_exp
+					| multiplicative_exp TDIV error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					| multiplicative_exp TMOD unary_exp
+					| multiplicative_exp TMOD error
+					{
+						yyerrok;
+						printError(wrong_op);	/* error - Wrong operation */
+					}
 					;
 unary_exp 			: postfix_exp
 	   				| TSUB unary_exp

@@ -22,8 +22,8 @@ extern int stidx; // index of identifier in String Table
 extern unsigned long yyleng; // matched string
 extern char* yytext; // length of matched string
 
-enum errorTypes { wrong_dcl, wrong_funcdef, nosemi, nobrace, nosquare, noparen,
-				  illch, illid, toolong, overst };
+enum errorTypes { wrong_st, wrong_dcl, wrong_funcdef, nosemi, nobrace, nosquare, noparen,
+				  illch, illid, toolong, overst, wrong_op, wrong_cmp, wrong_asgn };
 typedef enum errorTypes ERRORtypes;
 
 typedef struct HTentry {
