@@ -11,10 +11,7 @@
 #include "tn.h"
 #include "glob.h"
 
-extern ComputeHS(int nid, int nfree);
-extern LookupHS(int nid, int nfree);
-extern AddHT(int hscode);
-extern PrintHT();
+extern printError(ERRORtypes err);
 extern yyerror(char *s);
 %}
 
@@ -82,7 +79,7 @@ extern yyerror(char *s);
 
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
 
-.			return(TILLCH); //<- 이건 여기서 error 처리
+.			return(TILLCH);
 %%
 
 int yywrap() {

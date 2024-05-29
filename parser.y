@@ -38,6 +38,11 @@ mini_c 				: translation_unit
 					;
 translation_unit 	: external_dcl
 					| translation_unit external_dcl
+					| TILLCH
+					{
+						yyerrok;
+						printError(illch);	/* error - Missing paren */
+					}
 					;
 external_dcl 		: function_def
 		  			| declaration

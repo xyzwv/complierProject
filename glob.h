@@ -23,7 +23,7 @@ extern unsigned long yyleng; // matched string
 extern char* yytext; // length of matched string
 
 enum errorTypes { wrong_dcl, wrong_funcdef, nosemi, nobrace, nosquare, noparen,
-				  noerror, illsp, illid, overst, toolong };
+				  illch, illid, toolong, overst };
 typedef enum errorTypes ERRORtypes;
 
 typedef struct HTentry {
