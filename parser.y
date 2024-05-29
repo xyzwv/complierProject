@@ -17,6 +17,10 @@
 int type_int = 0;
 int type_void = 0;
 
+int returntp = 0; // 0:void 1:int
+int type = 0; // 0:scalar 1:array 2:function
+int paramidx = 0;
+
 void line(int);
 extern printError(ERRORtypes err);
 extern yylex();
@@ -56,10 +60,17 @@ dcl_specifier 		: type_qualifier
 					;
 type_qualifier 		: TCONST
 					;
-type_specifier 		: TINT	{type_int=1;}	/* type: integer */
-		 			| TVOID	{type_void=1;}	/* type: void */
+type_specifier 		: TINT	{type_int=1; returntp = 1;}	/* type: integer */
+		 			| TVOID	{type_void=1; returntp = 0;}	/* type: void */
 					;
 function_name 		: identifier
+					{
+						printf("func...");
+						curid->tp = 2;
+						curid->rtp = returntp;
+						preid = curid;
+						paramidx = 0;
+					}
 					;
 formal_param 		: TLPAREN opt_formal_param TRPAREN
 					| TLPAREN opt_formal_param error
@@ -78,6 +89,11 @@ formal_param_list 	: param_dcl
 /* 아래는 참고자료에 없는 부분으로, parser_book.y에 있는 코드 semantic만 지우고 그대로 가져옴 */
 
 param_dcl 			: dcl_spec declarator
+					{
+						curid->tp = type;
+						preid->param[paramidx++] = curid->index;
+						preid->paramnum++;
+					}
 					;
 compound_st 		: TLBRACE opt_dcl_list opt_stat_list TRBRACE
 					| TLBRACE opt_dcl_list opt_stat_list error
@@ -110,8 +126,8 @@ init_dcl_list 		: init_declarator
 init_declarator 	: declarator
 		 			| declarator TASSIGN TNUMBER
 					;
-declarator 			: identifier
-	     			| identifier TLSQUARE opt_number TRSQUARE
+declarator 			: identifier {type = 0;}
+	     			| identifier TLSQUARE opt_number TRSQUARE {type = 1;}
 					| identifier TLSQUARE opt_number error
 					{
 						yyerrok;

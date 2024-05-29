@@ -7,6 +7,13 @@
 #ifndef GLOB_H
 #define GLOB_H
 
+#define STsize 1000 // size of string table 
+#define HTsize 100 // size of hash table
+
+extern int paramidx;
+extern int returntp; // 0:void 1:int
+extern int type; // 0:scalar 1:array 2:function
+
 extern int line_num; // line number
 extern int cErrors; // number of errors
 
@@ -19,7 +26,22 @@ enum errorTypes { wrong_dcl, wrong_funcdef, nosemi, nobrace, nosquare, noparen,
 				  noerror, illsp, illid, overst, toolong };
 typedef enum errorTypes ERRORtypes;
 
+typedef struct HTentry {
+    int index; // index of identifier in ST
+    struct HTentry* next; // pointer to next identifier
+    int tp;
+    int rtp;
+    int paramnum;
+    int param[4];
+} HTentry;
+
+HTentry* HT[HTsize]; // Array of list head of hashtable 
+char ST[STsize]; // Array of string table
+
 extern void symbolTable();
 extern void printHT();
+
+HTentry* curid; // current identifier pointer
+HTentry* preid; // previous identifier pointer
 
 #endif /* GLOB_H */

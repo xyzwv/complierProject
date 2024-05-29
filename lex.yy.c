@@ -883,31 +883,32 @@ YY_RULE_SETUP
 								if(yyleng > 12) return(TTOOLONG);
 								else {
 									symbolTable();
+									printf("IDENT\n");
 									return(TIDENT);
 								}
 							}
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 81 "scanner.l"
+#line 82 "scanner.l"
 return(TILLIDENT);
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 83 "scanner.l"
+#line 84 "scanner.l"
 return(TNUMBER);
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 85 "scanner.l"
+#line 86 "scanner.l"
 return(TILLCH); //<- 이건 여기서 error 처리
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 86 "scanner.l"
+#line 87 "scanner.l"
 ECHO;
 	YY_BREAK
-#line 911 "lex.yy.c"
+#line 912 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(CMT):
 	yyterminate();
@@ -1768,7 +1769,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 86 "scanner.l"
+#line 87 "scanner.l"
 
 
 int yywrap() {

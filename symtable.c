@@ -10,22 +10,10 @@
 #include "glob.h"
 #include "tn.h"
 
-#define STsize 1000 // size of string table 
-#define HTsize 100 // size of hash table
-
 #define FALSE 0
 #define TRUE 1
 
 #define MAX_ID_LEN 12 // maximum length for an identifier
-
-typedef struct HTentry* HTpointer;
-typedef struct HTentry {
-    int index; // index of identifier in ST
-    HTpointer next; // pointer to next identifier 
-} HTentry;
-
-HTpointer HT[HTsize]; // Array of list head of hashtable 
-char ST[STsize]; // Array of string table
 
 int nextid = 0; // the current identifier
 int nextfree = 0; // the next available index of ST
@@ -72,7 +60,7 @@ void ComputeHS(int nid, int nfree) {
 //             the identifier. If find a match, set the found flag as true. Otherwise false.
 //             If find a match, save the starting index of ST in same id.
 void LookupHS(int nid, int hscode) {
-    HTpointer here;
+    HTentry* here;
     int i, j;
     found = FALSE; // 이미 HT에 존재하는 identifier인 경우 TRUE, 아니면 FALSE
 
@@ -104,12 +92,16 @@ void LookupHS(int nid, int hscode) {
 //          starting index of the identifier in ST.
 //          If list head HT[hashcode] is not null, add a new identifier to the head of the chain.
 void AddHT(int hscode) {
-    HTpointer ptr;
+    HTentry* ptr;
 
-    ptr = (HTpointer)malloc(sizeof(ptr));
+    ptr = (HTentry*)malloc(sizeof(HTentry));
     ptr->index = nextid;
+    ptr->tp = type;
+    ptr->rtp = returntp;
+    ptr->paramnum = 0;
     ptr->next = HT[hscode];
     HT[hscode] = ptr;
+    curid = ptr;
 }
 
 // Print Hashtable - Print the hash table. Write out the hashcode and the list of identifiers
@@ -117,7 +109,7 @@ void AddHT(int hscode) {
 //                 Print out the number of characters used up in ST.
 void printHT() {
     int i, j;
-    HTpointer here;
+    HTentry* here;
 
     printf("\n\n\n [[ HASH TABLE ]] \n\n");
 
@@ -129,6 +121,21 @@ void printHT() {
                 j = here->index;
                 while (ST[j] != '\0' && j < STsize) {
                     printf("%c", ST[j++]);
+                }
+                if (here->tp == 0) {
+                    printf(" - integer scalar variable ");
+                } else if (here->tp == 1) {
+                    printf(" - integer array variable ");
+                } else if (here->tp == 2) {
+                    printf(" - function\n");
+                    printf("\t\t  parameters : ");
+                    for (int x = 0; x < here->paramnum; x++) {
+                        int tmp = here->param[x];
+                        while (ST[tmp] != '\0' && tmp < STsize) {
+                            printf("%c", ST[tmp++]);
+                        }
+                        printf(" ");
+                    }
                 }
                 printf("    ");
             }

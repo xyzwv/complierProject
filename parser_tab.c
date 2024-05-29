@@ -68,6 +68,10 @@
 int type_int = 0;
 int type_void = 0;
 
+int returntp = 0; // 0:void 1:int
+int type = 0; // 0:scalar 1:array 2:function
+int paramidx = 0;
+
 void line(int);
 extern printError(ERRORtypes err);
 extern yylex();
@@ -195,17 +199,17 @@ static const short yyrhs[] = {    47,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    37,    39,    40,    42,    43,    45,    47,    49,    51,    52,
-    54,    55,    57,    59,    60,    62,    64,    65,    71,    72,
-    74,    75,    80,    82,    83,    89,    90,    92,    93,    95,
-    96,   101,   107,   108,   110,   111,   113,   114,   115,   121,
-   122,   124,   125,   127,   128,   130,   131,   132,   133,   134,
-   136,   138,   139,   141,   142,   144,   146,   147,   153,   155,
-   156,   157,   158,   159,   160,   161,   163,   164,   166,   167,
-   169,   170,   171,   173,   174,   175,   176,   177,   179,   180,
-   181,   183,   184,   185,   186,   188,   189,   190,   191,   192,
-   194,   195,   196,   197,   198,   200,   201,   203,   205,   206,
-   208,   209,   210,   212,   213,   218
+    41,    43,    44,    46,    47,    49,    51,    53,    55,    56,
+    58,    59,    61,    63,    64,    66,    75,    76,    82,    83,
+    85,    86,    91,    98,    99,   105,   106,   108,   109,   111,
+   112,   117,   123,   124,   126,   127,   129,   130,   131,   137,
+   138,   140,   141,   143,   144,   146,   147,   148,   149,   150,
+   152,   154,   155,   157,   158,   160,   162,   163,   169,   171,
+   172,   173,   174,   175,   176,   177,   179,   180,   182,   183,
+   185,   186,   187,   189,   190,   191,   192,   193,   195,   196,
+   197,   199,   200,   201,   202,   204,   205,   206,   207,   208,
+   210,   211,   212,   213,   214,   216,   217,   219,   221,   222,
+   224,   225,   226,   228,   229,   234
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
@@ -846,64 +850,90 @@ yyreduce:
   switch (yyn) {
 
 case 14:
-#line 59 "parser.y"
-{type_int=1;;
+#line 63 "parser.y"
+{type_int=1; returntp = 1;;
     break;}
 case 15:
-#line 60 "parser.y"
-{type_void=1;;
+#line 64 "parser.y"
+{type_void=1; returntp = 0;;
+    break;}
+case 16:
+#line 67 "parser.y"
+{
+						printf("func...");
+						curid->tp = 2;
+						curid->rtp = returntp;
+						preid = curid;
+						paramidx = 0;
+					;
     break;}
 case 18:
-#line 66 "parser.y"
+#line 77 "parser.y"
 {
 						yyerrok;
 						printError(noparen);	/* error - Missing paren */
 					;
     break;}
+case 23:
+#line 92 "parser.y"
+{
+						curid->tp = type;
+						preid->param[paramidx++] = curid->index;
+						preid->paramnum++;
+					;
+    break;}
 case 25:
-#line 84 "parser.y"
+#line 100 "parser.y"
 {
 						yyerrok;
 						printError(nobrace);	/* error - Missing brace */
 					;
     break;}
 case 31:
-#line 97 "parser.y"
+#line 113 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 32:
-#line 102 "parser.y"
+#line 118 "parser.y"
 {
 						yyerrok;
 						printError(wrong_dcl);	/* error - wrong declaration */
 					;
     break;}
+case 37:
+#line 129 "parser.y"
+{type = 0;;
+    break;}
+case 38:
+#line 130 "parser.y"
+{type = 1;;
+    break;}
 case 39:
-#line 116 "parser.y"
+#line 132 "parser.y"
 {
 						yyerrok;
 						printError(nosquare);	/* error - Missing square */
 					;
     break;}
 case 58:
-#line 148 "parser.y"
+#line 164 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 105:
-#line 214 "parser.y"
+#line 230 "parser.y"
 {
 						yyerrok;
 						printError(toolong);	/* error - too long identifier */
 					;
     break;}
 case 106:
-#line 219 "parser.y"
+#line 235 "parser.y"
 {
 						yyerrok;
 						printError(illid);		/* error - illegal identifier */
@@ -1107,6 +1137,6 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 224 "parser.y"
+#line 240 "parser.y"
 
 
