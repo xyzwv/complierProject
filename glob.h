@@ -29,6 +29,7 @@ typedef enum errorTypes ERRORtypes;
 typedef struct HTentry {
     int index; // index of identifier in ST
     struct HTentry* next; // pointer to next identifier
+    int linenum;
     int tp;
     int rtp;
     int paramnum;

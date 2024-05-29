@@ -53,7 +53,7 @@
 /*
  * parser.y - yacc source for the MiniC
  * 
- * Programmer - ±è¿¹Áö(2176082), ¼ÛÃ¤¿ø(2076216), ½ÅÁ¤È­(2271035), À±ÇÏ¿µ(2071033)
+ * Programmer - ê¹€ì˜ˆì§€(2176082), ì†¡ì±„ì›(2076216), ì‹ ì •í™”(2271035), ìœ¤í•˜ì˜(2071033)
  *
  * date - 2024/5/31
  *
@@ -199,17 +199,17 @@ static const short yyrhs[] = {    47,
 
 #if YYDEBUG != 0
 static const short yyrline[] = { 0,
-    41,    43,    44,    46,    47,    49,    51,    53,    55,    56,
-    58,    59,    61,    63,    64,    66,    75,    76,    82,    83,
-    85,    86,    91,    98,    99,   105,   106,   108,   109,   111,
-   112,   117,   123,   124,   126,   127,   129,   130,   131,   137,
-   138,   140,   141,   143,   144,   146,   147,   148,   149,   150,
-   152,   154,   155,   157,   158,   160,   162,   163,   169,   171,
-   172,   173,   174,   175,   176,   177,   179,   180,   182,   183,
-   185,   186,   187,   189,   190,   191,   192,   193,   195,   196,
-   197,   199,   200,   201,   202,   204,   205,   206,   207,   208,
-   210,   211,   212,   213,   214,   216,   217,   219,   221,   222,
-   224,   225,   226,   228,   229,   234
+    41,    43,    44,    46,    47,    49,    52,    54,    56,    57,
+    59,    60,    62,    64,    65,    67,    76,    77,    83,    84,
+    86,    87,    92,    99,   100,   106,   107,   109,   110,   112,
+   113,   118,   124,   125,   127,   128,   130,   131,   132,   138,
+   139,   141,   142,   144,   145,   147,   148,   149,   150,   151,
+   153,   155,   156,   158,   159,   161,   163,   164,   170,   172,
+   173,   174,   175,   176,   177,   178,   180,   181,   183,   184,
+   186,   187,   188,   190,   191,   192,   193,   194,   196,   197,
+   198,   200,   201,   202,   203,   205,   206,   207,   208,   209,
+   211,   212,   213,   214,   215,   217,   218,   220,   222,   223,
+   225,   226,   227,   229,   230,   235
 };
 
 static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
@@ -850,15 +850,15 @@ yyreduce:
   switch (yyn) {
 
 case 14:
-#line 63 "parser.y"
+#line 64 "parser.y"
 {type_int=1; returntp = 1;;
     break;}
 case 15:
-#line 64 "parser.y"
+#line 65 "parser.y"
 {type_void=1; returntp = 0;;
     break;}
 case 16:
-#line 67 "parser.y"
+#line 68 "parser.y"
 {
 						printf("func...");
 						curid->tp = 2;
@@ -868,14 +868,14 @@ case 16:
 					;
     break;}
 case 18:
-#line 77 "parser.y"
+#line 78 "parser.y"
 {
 						yyerrok;
 						printError(noparen);	/* error - Missing paren */
 					;
     break;}
 case 23:
-#line 92 "parser.y"
+#line 93 "parser.y"
 {
 						curid->tp = type;
 						preid->param[paramidx++] = curid->index;
@@ -883,57 +883,57 @@ case 23:
 					;
     break;}
 case 25:
-#line 100 "parser.y"
+#line 101 "parser.y"
 {
 						yyerrok;
 						printError(nobrace);	/* error - Missing brace */
 					;
     break;}
 case 31:
-#line 113 "parser.y"
+#line 114 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 32:
-#line 118 "parser.y"
+#line 119 "parser.y"
 {
 						yyerrok;
 						printError(wrong_dcl);	/* error - wrong declaration */
 					;
     break;}
 case 37:
-#line 129 "parser.y"
+#line 130 "parser.y"
 {type = 0;;
     break;}
 case 38:
-#line 130 "parser.y"
+#line 131 "parser.y"
 {type = 1;;
     break;}
 case 39:
-#line 132 "parser.y"
+#line 133 "parser.y"
 {
 						yyerrok;
 						printError(nosquare);	/* error - Missing square */
 					;
     break;}
 case 58:
-#line 164 "parser.y"
+#line 165 "parser.y"
 {
 						yyerrok;
 						printError(nosemi);	/* error - Missing semicolon */
 					;
     break;}
 case 105:
-#line 230 "parser.y"
+#line 231 "parser.y"
 {
 						yyerrok;
 						printError(toolong);	/* error - too long identifier */
 					;
     break;}
 case 106:
-#line 235 "parser.y"
+#line 236 "parser.y"
 {
 						yyerrok;
 						printError(illid);		/* error - illegal identifier */
@@ -1137,6 +1137,6 @@ yyerrhandle:
   yystate = yyn;
   goto yynewstate;
 }
-#line 240 "parser.y"
+#line 241 "parser.y"
 
 

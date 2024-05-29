@@ -96,6 +96,7 @@ void AddHT(int hscode) {
 
     ptr = (HTentry*)malloc(sizeof(HTentry));
     ptr->index = nextid;
+    ptr->linenum = line_num;
     ptr->tp = type;
     ptr->rtp = returntp;
     ptr->paramnum = 0;
@@ -124,11 +125,17 @@ void printHT() {
                 }
                 if (here->tp == 0) {
                     printf(" - integer scalar variable ");
+                    printf(" (line %d)", here->linenum);
                 } else if (here->tp == 1) {
                     printf(" - integer array variable ");
+                    printf(" (line %d)", here->linenum);
                 } else if (here->tp == 2) {
-                    printf(" - function\n");
-                    printf("\t\t  parameters : ");
+                    printf(" - function ");
+                    printf(" (line %d)\n", here->linenum);
+                    printf("\t\t  return type : ");
+                    if (here->rtp == 0) printf("void / ");
+                    else if (here->rtp == 1) printf("int / ");
+                    printf("parameters : ");
                     for (int x = 0; x < here->paramnum; x++) {
                         int tmp = here->param[x];
                         while (ST[tmp] != '\0' && tmp < STsize) {
