@@ -23,7 +23,7 @@ extern yylex();
 extern yyerror(char* s);
 %}
 
-%token TIDENT TNUMBER TCONST TELSE TIF TINT TRETURN TVOID TWHILE
+%token TIDENT TNUMBER TRNUMBER TCONST TELSE TIF TINT TFLOAT TRETURN TVOID TWHILE
 %token TADD TSUB TMUL TDIV TMOD 
 %token TASSIGN TADDASSIGN TSUBASSIGN TMULASSIGN TDIVASSIGN TMODASSIGN
 %token TNOT TOR TAND TEQUAL TNOTEQU TGREAT TLESS TGREATE TLESSE
@@ -77,12 +77,13 @@ dcl_specifier 		: type_qualifier
 					;
 type_qualifier 		: TCONST
 					;
-type_specifier 		: TINT	{returntp = 1;}		/* type: integer */
-		 			| TVOID	{returntp = 0;}		/* type: void */
+type_specifier 		: TINT  {returntp = 1;}  /* type: integer */
+					| TFLOAT  {returntp = 2;}  /* type: float */
+		 			| TVOID	 {returntp = 0;}  /* type: void */
 					;
 function_name 		: identifier
 					{
-						curid->tp = 2;
+						curid->tp = 4;
 						curid->rtp = returntp;
 						preid = curid;
 						paramidx = 0;
@@ -138,9 +139,18 @@ init_dcl_list 		: init_declarator
 					;
 init_declarator 	: declarator
 		 			| declarator TASSIGN TNUMBER
+					| declarator TASSIGN TRNUMBER
 					;
-declarator 			: identifier {curid->tp = 0;}
-	     			| identifier TLSQUARE opt_number TRSQUARE {curid->tp = 1;}
+declarator 			: identifier
+					{
+						if (returntp == 1) {type = 0; curid->tp = 0;}
+						else if (returntp == 2) {type = 2; curid->tp = 2;}
+					}
+	     			| identifier TLSQUARE opt_number TRSQUARE
+					{
+						if (returntp == 1) {type = 1; curid->tp = 1; returntp = type = -1;}
+						else if (returntp == 2) {type = 3; curid->tp = 3; returntp = type = -1;}
+					}
 					| identifier TLSQUARE opt_number error
 					{
 						yyerrok;
@@ -316,6 +326,7 @@ actual_param_list 	: assignment_exp
 					;
 primary_exp 		: identifier
 	     			| TNUMBER
+					| TRNUMBER
 	     			| TLPAREN expression TRPAREN
 					;
 identifier			: TIDENT

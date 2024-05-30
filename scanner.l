@@ -22,6 +22,7 @@ extern yyerror(char *s);
 "else"		return(TELSE);
 "if"		return(TIF);
 "int"		return(TINT);
+"float"		return(TFLOAT);
 "return"	return(TRETURN);
 "void"		return(TVOID);
 "while"		return(TWHILE);
@@ -78,6 +79,7 @@ extern yyerror(char *s);
 [0-9][A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
 
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
+[0-9]+"."[0-9]+			return(TRNUMBER);
 
 .			return(TILLCH);
 %%

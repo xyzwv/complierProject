@@ -10,8 +10,8 @@
 #define STsize 1000 // size of string table 
 #define HTsize 100 // size of hash table
 
-extern int returntp; // 0:void, 1:int
-extern int type; // 0:scalar, 1:array, 2:function
+extern int returntp; // 0:void, 1:int, 2:float
+extern int type; // 0:int scalar, 1:int array, 2:float scalar, 3:float array, 4:function
 extern int paramidx; // index of parameter array
 
 extern int line_num; // line number

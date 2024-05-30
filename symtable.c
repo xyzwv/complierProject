@@ -126,10 +126,20 @@ void printHT() {
                 if (here->tp == 0) {
                     printf(" - integer scalar variable ");
                     printf(" (line %d)", here->linenum);
-                } else if (here->tp == 1) {
+                }
+                else if (here->tp == 1) {
                     printf(" - integer array variable ");
                     printf(" (line %d)", here->linenum);
-                } else if (here->tp == 2) {
+                }
+                else if (here->tp == 2) {
+                    printf(" - float scalar variable ");
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 3) {
+                    printf(" - float array variable ");
+                    printf(" (line %d)", here->linenum);
+                }
+                else if (here->tp == 4) {
                     printf(" - function ");
                     printf(" (line %d)\n", here->linenum);
                     printf("\t\t  return type : ");
@@ -144,7 +154,7 @@ void printHT() {
                         printf(" ");
                     }
                 }
-                printf("    ");
+                printf("\n\t\t  ");
             }
             printf("\n");
         }
