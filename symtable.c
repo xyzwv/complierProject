@@ -145,6 +145,7 @@ void printHT() {
                     printf("\t\t  return type : ");
                     if (here->rtp == 0) printf("void / ");
                     else if (here->rtp == 1) printf("int / ");
+                    else if (here->rtp == 2) printf("float / ");
                     printf("parameters : ");
                     for (int x = 0; x < here->paramnum; x++) {
                         int tmp = here->param[x];
