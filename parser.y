@@ -29,7 +29,7 @@ extern yyerror(char* s);
 %token TNOT TOR TAND TEQUAL TNOTEQU TGREAT TLESS TGREATE TLESSE
 %token TINC TDEC TCOMMA TSEMICOLON
 %token TLPAREN TRPAREN TLBRACE TRBRACE TLSQUARE TRSQUARE
-%token TTOOLONG TILLIDENT TILLCH
+%token TTOOLONG TSTARTWD TILLCH
 %nonassoc TLOWERTHANELSE
 %nonassoc TELSE
 
@@ -335,10 +335,10 @@ identifier			: TIDENT
 						yyerrok;
 						printError(toolong);	/* error - too long identifier */
 					}
-					| TILLIDENT
+					| TSTARTWD
 					{
 						yyerrok;
-						printError(illid);		/* error - illegal identifier */
+						printError(startwd);		/* error - Start with digit identifier */
 					}
 					;
 %%

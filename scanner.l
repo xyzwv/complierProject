@@ -14,7 +14,8 @@
 extern printError(ERRORtypes err);
 extern yyerror(char *s);
 %}
-
+L		[A-Za-z_]
+D		[0-9]
 %s CMT
 
 %%
@@ -68,18 +69,18 @@ extern yyerror(char *s);
 "//".*		;
 "/*"([^*]|\*+[^*/])*\**"*"	;
 
-[A-Za-z_][A-Za-z0-9_]*		{
-								if(yyleng > 12) return(TTOOLONG);
-								else {
-									symbolTable();
-									return(TIDENT);
-								}
-							}
+{L}({L}|{D})*		{
+						if(yyleng > 12) return(TTOOLONG);
+						else {
+							symbolTable();
+							return(TIDENT);
+						}
+					}
 
-[0-9]+[A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
+{D}+{L}({L}|{D})*   return(TSTARTWD);
 
-[1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
-[0-9]+"."[0-9]+			return(TRNUMBER);
+{D}+				return(TNUMBER);
+{D}+"."{D}+			return(TRNUMBER);
 
 .			return(TILLCH);
 %%

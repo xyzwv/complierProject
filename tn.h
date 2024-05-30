@@ -43,7 +43,7 @@
 #define	TLSQUARE	297
 #define	TRSQUARE	298
 #define	TTOOLONG	299
-#define	TILLIDENT	300
+#define	TSTARTWD	300
 #define	TILLCH	301
 #define	TLOWERTHANELSE	302
 

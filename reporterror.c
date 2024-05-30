@@ -69,13 +69,13 @@ void printError(ERRORtypes err)
 
     case 7: //illch
         printf("line: %d ", line_num);
-        printf("< Error > => Lillegal character!\n");
+        printf("< Error > => Illegal character!\n");
         cErrors++;
         break;
 
-    case 8: //illid
+    case 8: //startwd
         printf("line: %d ", line_num);
-        printf("< Error > => Lillegal identifier!\n");
+        printf("< Error > => Start with digit identifier!\n");
         cErrors++;
         break;
 

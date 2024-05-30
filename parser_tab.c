@@ -46,7 +46,7 @@
 #define	TLSQUARE	297
 #define	TRSQUARE	298
 #define	TTOOLONG	299
-#define	TILLIDENT	300
+#define	TSTARTWD	300
 #define	TILLCH	301
 #define	TLOWERTHANELSE	302
 
@@ -228,7 +228,7 @@ static const char * const yytname[] = {   "$","error","$undefined.","TIDENT",
 "TWHILE","TADD","TSUB","TMUL","TDIV","TMOD","TASSIGN","TADDASSIGN","TSUBASSIGN",
 "TMULASSIGN","TDIVASSIGN","TMODASSIGN","TNOT","TOR","TAND","TEQUAL","TNOTEQU",
 "TGREAT","TLESS","TGREATE","TLESSE","TINC","TDEC","TCOMMA","TSEMICOLON","TLPAREN",
-"TRPAREN","TLBRACE","TRBRACE","TLSQUARE","TRSQUARE","TTOOLONG","TILLIDENT","TILLCH",
+"TRPAREN","TLBRACE","TRBRACE","TLSQUARE","TRSQUARE","TTOOLONG","TSTARTWD","TILLCH",
 "TLOWERTHANELSE","mini_c","translation_unit","external_dcl","function_def","function_header",
 "dcl_spec","dcl_specifiers","dcl_specifier","type_qualifier","type_specifier",
 "function_name","formal_param","opt_formal_param","formal_param_list","param_dcl",
@@ -1179,7 +1179,7 @@ case 130:
 #line 339 "parser.y"
 {
 						yyerrok;
-						printError(illid);		/* error - illegal identifier */
+						printError(startwd);		/* error - Start with digit identifier */
 					;
     break;}
 }
