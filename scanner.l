@@ -76,7 +76,7 @@ extern yyerror(char *s);
 								}
 							}
 
-[0-9][A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
+[0-9]+[A-Za-z_][A-Za-z0-9_]*	return(TILLIDENT);
 
 [1-9][0-9]*|0([0-7]+|(x|X)[0-9A-Fa-f]*)?	return(TNUMBER);
 [0-9]+"."[0-9]+			return(TRNUMBER);
